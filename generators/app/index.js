@@ -2,12 +2,6 @@ var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
 
-    'exec': function() {
-    },
-
-    'initializing': function() {
-    },
-
     'prompting': function() {
 
         var done = this.async();
