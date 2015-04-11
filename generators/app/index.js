@@ -87,6 +87,8 @@ module.exports = generators.Base.extend({
             this._answers
         );
 
+        this.config.save();
+
     },
 
     'install': function() {
@@ -117,7 +119,7 @@ module.exports = generators.Base.extend({
     },
 
     'end': function() {
-        console.log('Your project is ready!');
+        console.log('Your project is ready.');
     }
 
 });
