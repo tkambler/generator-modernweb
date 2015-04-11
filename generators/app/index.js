@@ -1,6 +1,4 @@
 var generators = require('yeoman-generator');
-var _ = require('lodash');
-_.mixin(require('underscore.string'));
 
 module.exports = generators.Base.extend({
 
@@ -17,11 +15,23 @@ module.exports = generators.Base.extend({
         this.prompt([
             {
                 'type': 'input',
-                'name': 'name',
-                'message': 'Project Name',
+                'name': 'title',
+                'message': 'Project Title',
                 'default': 'My Project',
+                'validate': function(title) {
+                    return (title.length > 0);
+                }
+            },
+            {
+                'type': 'input',
+                'name': 'package_name',
+                'message': 'Package Name',
+                'default': 'my-project',
                 'validate': function(name) {
-                    return (name.length > 0);
+                    return (name.length > 0 && /^[a-z0-9\-]+$/i.test(name));
+                },
+                'filter': function(name) {
+                    return name.toLowerCase();
                 }
             },
             {
@@ -45,95 +55,44 @@ module.exports = generators.Base.extend({
             {
                 'type': 'input',
                 'name': 'port',
-                'message': 'Express Port (> 1024)',
+                'message': 'Express Port',
                 'default': 7000,
                 'validate': function(port) {
                     port = parseInt(port, 10);
-                    if (!_.isNaN(port) && port > 1024) return true;
-                    return false;
+                    return (!isNaN(port) && port > 0);
                 }
             },
             {
                 'type': 'confirm',
                 'name': 'confirm',
                 'message': function(answers) {
-                    return _.sprintf('Project will be created in: %s - Continue?', this.destinationRoot());
+                    return 'Project will be created in: ' + this.destinationRoot() + ' - Continue?';
                 }.bind(this)
             }
         ], function(answers) {
 
-            answers.package_name = _.slugify(answers.name);
             this._answers = answers;
-
             if (!answers.confirm) process.exit();
-
             done();
 
         }.bind(this));
 
     },
 
-    'configuring': function() {
-        console.log('configuring');
-    },
-
-    'default': function() {
-        console.log('default');
-    },
-
     'writing': function() {
 
-        var data = _.pick(this._answers, ['description', 'name', 'package_name', 'author', 'port']);
-
         this.fs.copyTpl(
-            this.templatePath('public/**/*'),
-            this.destinationPath('public'),
-            data
-        );
-
-        this.fs.copyTpl(
-            this.templatePath('Gruntfile.js'),
-            this.destinationPath('Gruntfile.js'),
-            data
-        );
-
-        this.fs.copy(
-            this.templatePath('tasks/**/*'),
-            this.destinationPath('tasks')
-        );
-
-        this.fs.copy(
-            this.templatePath('lib/**/*'),
-            this.destinationPath('lib')
-        );
-
-        this.fs.copy(
-            this.templatePath('scss/**/*'),
-            this.destinationPath('scss')
-        );
-
-        this.fs.copyTpl(
-            this.templatePath('package.json'),
-            this.destinationPath('package.json'),
-            data
+            this.templatePath('**/*'),
+            this.destinationPath(),
+            this._answers
         );
 
         this.fs.copyTpl(
             this.templatePath('.bowerrc'),
             this.destinationPath('.bowerrc'),
-            data
+            this._answers
         );
 
-        this.fs.copyTpl(
-            this.templatePath('bower.json'),
-            this.destinationPath('bower.json'),
-            data
-        );
-
-    },
-
-    'conflicts': function() {
-        // console.log('conflicts');
     },
 
     'install': function() {
@@ -153,7 +112,8 @@ module.exports = generators.Base.extend({
             'lodash',
             'underscore.string',
             'bulkify',
-            'folderify'
+            'folderify',
+            'grunt-open'
         ], {
             'saveDev': false
         });
@@ -163,7 +123,7 @@ module.exports = generators.Base.extend({
     },
 
     'end': function() {
-        console.log('ending');
+        console.log('Your project is ready!');
     }
 
 });

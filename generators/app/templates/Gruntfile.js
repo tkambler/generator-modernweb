@@ -6,11 +6,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-open');
 
     grunt.config.init({
         'approot': __dirname,
         'server': {
-            'port': 7000
+            'port': <%= port %>
         },
         'concat': {
             'options': {
@@ -37,7 +38,7 @@ module.exports = function(grunt) {
         'concurrent': {
             'app': {
                 'tasks': [
-                    'server', 'watch'
+                    'server', 'watch', 'open'
                 ],
                 'options': {
                     'logConcurrentOutput': true
@@ -71,6 +72,11 @@ module.exports = function(grunt) {
                 'options': {
                     'spawn': true
                 }
+            }
+        },
+        'open': {
+            'app': {
+                'path': 'http://localhost:<%= port %>'
             }
         }
     });
