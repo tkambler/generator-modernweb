@@ -1,0 +1,14 @@
+{
+  "name": "generator-modernweb",
+  "version": "1.0.0",
+  "description": "An example Yeoman generator for the book Pro JavaScript Frameworks for Modern Web Development",
+  "files": [],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "lodash": "^3.6.0",
+    "underscore.string": "^3.0.3",
+    "yeoman-generator": "^0.19.1"
+  }
+}
