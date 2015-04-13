@@ -4,6 +4,6 @@ module.exports = {
     'route': '/<%= route %>',
     'controller': function() {
     },
-    'templateUrl': '/app/templates/<%= route %>.html',
+    'templateUrl': '/app/routes/<%= route %>/template.html',
     'resolve': {}
 };
