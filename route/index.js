@@ -1,45 +1,32 @@
 var generators = require('yeoman-generator');
 
-module.exports = generators.Base.extend({
+module.exports = generators.NamedBase.extend({
 
-    'prompting': function() {
-
-        var done = this.async();
-
-        this.prompt([
-            {
-                'type': 'input',
-                'name': 'route',
-                'message': 'Route Name - e.g. \'users\'',
-                'validate': function(route) {
-                    return (route.length > 0 && /^[a-z0-9\-]+$/i.test(route));
-                }
-            }
-        ], function(answers) {
-            this._answers = answers;
-            done();
-        }.bind(this));
-
+    'constructor': function(args) {
+        this._opts = {
+            'route': args[0]
+        };
+        generators.NamedBase.apply(this, arguments);
     },
 
     'writing': function() {
 
         this.fs.copyTpl(
             this.templatePath('index.js'),
-            this.destinationPath('public/app/routes/' + this._answers.route + '/index.js'),
-            this._answers
+            this.destinationPath('public/app/routes/' + this._opts.route + '/index.js'),
+            this._opts
         );
 
         this.fs.copyTpl(
             this.templatePath('template.html'),
-            this.destinationPath('public/app/routes/' + this._answers.route + '/template.html'),
-            this._answers
+            this.destinationPath('public/app/routes/' + this._opts.route + '/template.html'),
+            this._opts
         );
 
     },
 
     'end': function() {
-        console.log('Route `' + this._answers.route + '` created.');
+        this.log('Route `' + this._opts.route + '` created.');
     }
 
 });

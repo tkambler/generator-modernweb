@@ -55,18 +55,10 @@ module.exports = generators.Base.extend({
                     port = parseInt(port, 10);
                     return (!isNaN(port) && port > 0);
                 }
-            },
-            {
-                'type': 'confirm',
-                'name': 'confirm',
-                'message': function(answers) {
-                    return 'Project will be created in: ' + this.destinationRoot() + ' - Continue?';
-                }.bind(this)
             }
         ], function(answers) {
 
             this._answers = answers;
-            if (!answers.confirm) process.exit();
             done();
 
         }.bind(this));
@@ -81,11 +73,15 @@ module.exports = generators.Base.extend({
             this._answers
         );
 
-        this.fs.copyTpl(
+        this.fs.copy(
             this.templatePath('.bowerrc'),
             this.destinationPath('.bowerrc'),
             this._answers
         );
+
+        this.composeWith('modernweb:route', {
+            'args': ['dashboard']
+        });
 
         this.config.save();
 
@@ -119,7 +115,7 @@ module.exports = generators.Base.extend({
     },
 
     'end': function() {
-        console.log('Your project is ready.');
+        this.log('Your project is ready.');
     }
 
 });
