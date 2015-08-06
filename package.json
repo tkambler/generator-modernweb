@@ -1,6 +1,6 @@
 {
   "name": "generator-modernweb",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An example Yeoman generator for the book Pro JavaScript Frameworks for Modern Web Development",
   "files": [
     "app",
@@ -25,5 +25,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tkambler/generator-modernweb"
+  },
+  "scripts": {
+    "postinstall": "node ./bin/post-install.js"
   }
 }
