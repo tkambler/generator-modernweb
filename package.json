@@ -12,7 +12,7 @@
     "app/templates/public/app/routes/dashboard",
     "app/templates/public/app/templates",
     "app/tempaltes/scss",
-    "app/templates/tasks"
+    "app/templates/tasks",
     "route",
     "route/templates"
   ],
