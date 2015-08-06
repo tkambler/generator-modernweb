@@ -1,6 +1,6 @@
 {
   "name": "generator-modernweb",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An example Yeoman generator for the book Pro JavaScript Frameworks for Modern Web Development",
   "files": [
     "bin",
@@ -12,7 +12,7 @@
     "app/templates/public/app/routes",
     "app/templates/public/app/routes/dashboard",
     "app/templates/public/app/templates",
-    "app/tempaltes/scss",
+    "app/templates/scss",
     "app/templates/tasks",
     "route",
     "route/templates"
