@@ -2,7 +2,10 @@
   "name": "generator-modernweb",
   "version": "1.0.6",
   "description": "An example Yeoman generator for the book Pro JavaScript Frameworks for Modern Web Development",
-  "files": [],
+  "files": [
+    "app",
+    "route"
+  ],
   "keywords": [
     "yeoman-generator"
   ],
