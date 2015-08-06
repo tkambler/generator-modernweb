@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var fs = require('fs');
 
 module.exports = generators.Base.extend({
 
@@ -73,6 +74,14 @@ module.exports = generators.Base.extend({
             this._answers
         );
 
+        this.fs.copyTpl(
+            this.templatePath('pkg.json'),
+            this.destinationPath('package.json'),
+            this._answers
+        );
+
+        this.fs.delete(this.destinationPath('pkg.json'));
+
         this.fs.copy(
             this.templatePath('.bowerrc'),
             this.destinationPath('.bowerrc'),
@@ -101,8 +110,6 @@ module.exports = generators.Base.extend({
             'grunt-concurrent',
             'bulk-require',
             'brfs',
-            'lodash',
-            'underscore.string',
             'bulkify',
             'folderify',
             'grunt-open'
